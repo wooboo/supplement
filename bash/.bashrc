@@ -660,7 +660,7 @@ eval "$(starship init bash)"
 eval "$(zoxide init bash)"
 eval "$(fzf --bash)"
 eval "$(fnm env --use-on-cd --shell bash)"
-. "/home/wooboo/.deno/env"
+
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
