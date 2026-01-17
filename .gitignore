@@ -1,0 +1,15 @@
+# Secrets
+**/antigravity-accounts.json
+**/refreshToken
+**/*.key
+**/*token*
+**/secret*
+.env
+
+# Node
+node_modules/
+bun.lock
+package-lock.json
+
+# Logs
+*.log

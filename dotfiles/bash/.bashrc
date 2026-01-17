@@ -656,6 +656,7 @@ _fzf_comprun() {
   esac
 }
 
+
 eval "$(starship init bash)"
 eval "$(zoxide init bash)"
 eval "$(fzf --bash)"

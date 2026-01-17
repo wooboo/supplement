@@ -13,7 +13,8 @@ This repository contains supplementary configuration files, dotfiles, and instal
   - Tmux
   - Midnight Commander (mc)
   - Hyprland
-- **Tool Setup:** Scripts to install and configure development tools like VS Code, Ghostty, Zen Browser, and more.
+  - OpenCode
+- **Tool Setup:** Scripts to install and configure development tools like VS Code, Ghostty, Zen Browser, OpenCode, and more.
 - **Cleanup:** Includes a script to remove unwanted "bloat" software.
 - **Maintenance:** `upstow.sh` for easy package creation from existing home directory configs.
 
