@@ -25,6 +25,8 @@ fi
 # Check if source line already exists in hyprland.conf
 if grep -Fxq "$SOURCE_LINE" "$HYPRLAND_CONFIG"; then
     echo "Source line already exists in $HYPRLAND_CONFIG"
+    # Touching the main config to trigger Hyprland reload
+    touch "$HYPRLAND_CONFIG"
 else
     echo "Adding source line to $HYPRLAND_CONFIG"
     echo "" >> "$HYPRLAND_CONFIG"
