@@ -1,5 +1,7 @@
 #!/bin/bash
 
+yay -S --noconfirm --needed gomplate jq
+
 if ! bw login --check >/dev/null 2>&1; then
     export BW_SESSION=$(bw login --raw)
 elif [ -z "$BW_SESSION" ]; then

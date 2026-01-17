@@ -7,7 +7,6 @@ stow -t "$HOME" -d "$STOW_DIR" bash
 stow -t "$HOME" -d "$STOW_DIR" starship
 stow -t "$HOME" -d "$STOW_DIR" fastfetch
 stow -t "$HOME" -d "$STOW_DIR" git
-stow -t "$HOME" -d "$STOW_DIR" opencode
 stow -t "$HOME" -d "$STOW_DIR" hyprland
 stow -t "$HOME" -d "$STOW_DIR" mc
 stow -t "$HOME" -d "$STOW_DIR" tmux
