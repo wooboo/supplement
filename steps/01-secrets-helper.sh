@@ -19,7 +19,15 @@ backup_if_changed() {
     fi
 
     local BACKUP="${TARGET}.${TIMESTAMP}.bak"
-    echo "Backing up $TARGET to $BACKUP"
+    echo "Changes detected in $TARGET. Backing up to $BACKUP"
+    
+    # Show diff
+    if command -v colordiff >/dev/null 2>&1; then
+        colordiff -u "$TARGET" "$NEW_SOURCE"
+    else
+        diff -u --color=always "$TARGET" "$NEW_SOURCE"
+    fi
+
     cp "$TARGET" "$BACKUP"
 }
 
