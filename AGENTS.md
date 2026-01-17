@@ -36,7 +36,7 @@ Arch Linux + Hyprland dotfile management and system provisioning repository. Use
 - **Sourcing**: `install-all.sh` uses `source`. Scripts in `steps/` share the same shell environment.
 - **Idempotency**: All installation scripts must use `--needed` flags or conditional checks.
 - **Numerical Prefix**: Use `00-` for scripts that must run early. `01-secrets-helper.sh` provides common utility.
-- **Secrets**: Use `process_bw_templates <bw_item> <template_dir>` from the helper.
+- **Secrets**: Use `process_bw_templates <bw_item> <template_dir> ["--merge-json"]` from the helper.
 
 ## ANTI-PATTERNS (THIS PROJECT)
 - **No `exit`**: Using `exit` in `steps/*.sh` terminates the main installer. Use `return`.

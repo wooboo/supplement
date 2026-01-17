@@ -32,10 +32,12 @@ backup_if_changed() {
 }
 
 # Function to process templates using secrets from Bitwarden
-# Usage: process_bw_templates <bw_item_name> <templates_dir>
+# Usage: process_bw_templates <bw_item_name> <templates_dir> [options]
+# Options: --merge-json (deep merge existing JSON files instead of overwriting)
 process_bw_templates() {
     local BW_ITEM="$1"
     local TEMPLATE_DIR="$2"
+    local OPTIONS="$3"
     local SECRETS_FILE="/dev/shm/bw-secrets-${BW_ITEM}.json"
 
     if [ -z "$BW_ITEM" ] || [ -z "$TEMPLATE_DIR" ]; then
@@ -85,6 +87,16 @@ process_bw_templates() {
             temp_output=$(mktemp)
             gomplate -d secrets="file://$SECRETS_FILE" -f "$tmpl_path" -o "$temp_output"
             
+            # Deep merge if requested and target is JSON
+            if [[ "$OPTIONS" == *"--merge-json"* ]] && [ -f "$target_path" ]; then
+                if jq . "$target_path" >/dev/null 2>&1 && jq . "$temp_output" >/dev/null 2>&1; then
+                    merged_output=$(mktemp)
+                    echo "Merging JSON changes for $target_path..."
+                    jq -s '.[0] * .[1]' "$target_path" "$temp_output" > "$merged_output"
+                    mv "$merged_output" "$temp_output"
+                fi
+            fi
+
             backup_if_changed "$target_path" "$temp_output"
             
             mv "$temp_output" "$target_path"
@@ -93,9 +105,22 @@ process_bw_templates() {
             target_path="$HOME/$rel_path"
             mkdir -p "$(dirname "$target_path")"
             
-            backup_if_changed "$target_path" "$tmpl_path"
+            # Use temporary file to allow merging for non-template JSONs too
+            temp_output=$(mktemp)
+            cp "$tmpl_path" "$temp_output"
+
+            if [[ "$OPTIONS" == *"--merge-json"* ]] && [ -f "$target_path" ]; then
+                if jq . "$target_path" >/dev/null 2>&1 && jq . "$temp_output" >/dev/null 2>&1; then
+                    merged_output=$(mktemp)
+                    echo "Merging JSON changes for $target_path..."
+                    jq -s '.[0] * .[1]' "$target_path" "$temp_output" > "$merged_output"
+                    mv "$merged_output" "$temp_output"
+                fi
+            fi
+
+            backup_if_changed "$target_path" "$temp_output"
             
-            cp "$tmpl_path" "$target_path"
+            mv "$temp_output" "$target_path"
         fi
     done
 

@@ -20,7 +20,7 @@ System provisioning logic modularized into individual shell scripts. Orchestrate
 
 ## CONVENTIONS
 - **Ordering**: Prefix with `00-`, `01-`, etc., for specific bootstrap order. Otherwise, alphabetical.
-- **Secrets Management**: Use `process_bw_templates "<item>" "$REPO_DIR/templates/<subfolder>"` for secret-injected configs.
+- **Secrets Management**: Use `process_bw_templates "<item>" "$REPO_DIR/templates/<subfolder>" ["--merge-json"]` for secret-injected configs. Use `--merge-json` for deep merging into existing JSON files.
 - **Safety**: Use `pacman -S --needed` or `yay --needed` for idempotency.
 - **Verification**: Use `command -v <cmd>` to guard installation logic.
 
