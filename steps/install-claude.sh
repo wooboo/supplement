@@ -1,6 +1,6 @@
 #!/bin/sh
 
-yay -S --noconfirm --needed claude-code claude-desktop-bin
+yay -S --noconfirm --needed claude-code
 
 TEMPLATE_DIR="$REPO_ROOT/templates/claude"
 
