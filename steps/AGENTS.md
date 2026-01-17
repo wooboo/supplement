@@ -14,6 +14,7 @@ System provisioning logic modularized into individual shell scripts. Orchestrate
 - `01-secrets-helper.sh`: **Common Utility**. Provides Bitwarden auth and template processing functions.
 - `04-install-bitwarden.sh`: Configures Bitwarden CLI server.
 - `05-secrets.sh`: Processes global dotfile secrets.
+- `install-claude.sh`: Installs Claude Code and Desktop, manages its templates.
 - `install-overrides.sh`: Specific Hyprland configuration updates.
 - `install-*.sh`: Package-specific installation and configuration.
 
