@@ -14,4 +14,4 @@ PROMPT="$*"
 # Call opencode run with the model and prompt.
 # We instruct it to be a Linux/Arch assistant and show exact commands/scripts.
 
-opencode run --model=antigravity-gemini-3-flash "You are a Linux/Arch Linux/Omarchy terminal assistant. Provide the exact command(s) or a short script to solve the following task. Be concise. If multiple steps are needed, list them clearly. Always show the full command or script. If you need clarifications, ask simple questions. Ask if the user wants to execute the command or copy it to the clipboard. Task: $PROMPT"
+opencode run --model-id=antigravity-gemini-3-flash "You are a Linux/Arch Linux/Omarchy terminal assistant. Provide the exact command(s) or a short script to solve the following task. Be concise. If multiple steps are needed, list them clearly. Always show the full command or script. If you need clarifications, ask simple questions. Ask if the user wants to execute the command or copy it to the clipboard. Task: $PROMPT"
