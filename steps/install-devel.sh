@@ -6,6 +6,12 @@ if pacman -Qi "rust" >/dev/null 2>&1; then
     sudo pacman -Rns "rust" --noconfirm
 fi
 
+# Handle bun/bun-bin conflict
+if pacman -Qi "bun-bin" >/dev/null 2>&1; then
+    echo "Removing conflicting package bun-bin..."
+    sudo pacman -Rns "bun-bin" --noconfirm
+fi
+
 yay -S --noconfirm --needed base-devel openssl zlib rustup || return 1
 
 if command -v rustup >/dev/null 2>&1; then

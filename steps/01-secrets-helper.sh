@@ -22,8 +22,16 @@ process_bw_templates() {
 
     # Bitwarden Auth
     if ! bw login --check >/dev/null 2>&1; then
+        echo "--------------------------------------------------------"
+        echo "Secrets management requires access to your Bitwarden vault."
+        echo "This is used to inject configuration secrets (API keys, etc.)"
+        echo "into your dotfiles templates using gomplate."
+        echo "--------------------------------------------------------"
         export BW_SESSION=$(bw login --raw)
     elif [ -z "$BW_SESSION" ]; then
+        echo "--------------------------------------------------------"
+        echo "Unlocking Bitwarden vault for secrets injection..."
+        echo "--------------------------------------------------------"
         export BW_SESSION=$(bw unlock --raw)
     fi
 
