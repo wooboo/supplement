@@ -11,15 +11,19 @@ System provisioning logic modularized into individual shell scripts. Orchestrate
 
 ## STRUCTURE
 - `00-install-stow.sh`: **Destructive Setup**. Clears `~` to prevent Stow symlink conflicts.
-- `install-overrides.sh`: Specific Hyprland configuration checks.
-- `install-*.sh`: Package groups (e.g., `devel`, `webapps`, `ghostty`).
+- `01-secrets-helper.sh`: **Common Utility**. Provides Bitwarden auth and template processing functions.
+- `04-install-bitwarden.sh`: Configures Bitwarden CLI server.
+- `05-secrets.sh`: Processes global dotfile secrets.
+- `install-overrides.sh`: Specific Hyprland configuration updates.
+- `install-*.sh`: Package-specific installation and configuration.
 
 ## CONVENTIONS
-- **Ordering**: Prefix with `00-` for early bootstrap. Otherwise, scripts run alphabetically.
+- **Ordering**: Prefix with `00-`, `01-`, etc., for specific bootstrap order. Otherwise, alphabetical.
+- **Secrets Management**: Use `process_bw_templates "<item>" "$REPO_DIR/templates/<subfolder>"` for secret-injected configs.
 - **Safety**: Use `pacman -S --needed` or `yay --needed` for idempotency.
-- **Verification**: Use `command -v <cmd>` or `[ -d <path> ]` to guard installation logic.
+- **Verification**: Use `command -v <cmd>` to guard installation logic.
 
 ## ANTI-PATTERNS
-- **Exit/Set -e**: Critical failures in sourcing mechanism.
-- **Shebang reliance**: Shebangs are ignored; ensure compatibility with the caller (sh/bash).
-- **Silent Failures**: Log errors clearly but allow the installer to continue if appropriate.
+- **Exit/Set -e**: Critical failures in sourcing mechanism. Use `return 1` for errors.
+- **Interactive Prompts**: Ensure `yay` and other tools use non-interactive flags.
+- **Hardcoded Secrets**: Never commit actual secrets; use templates in `../templates/`.

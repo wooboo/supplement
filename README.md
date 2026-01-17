@@ -5,22 +5,20 @@ This repository contains supplementary configuration files, dotfiles, and instal
 ## Features
 
 - **Automated Installation:** `install-all.sh` updates the system and runs a suite of installation scripts.
-- **Dotfile Management:** Uses [GNU Stow](https://www.gnu.org/software/stow/) to manage configurations for:
-  - Bash
-  - Starship
-  - Fastfetch
-  - Git
-  - Tmux
-  - Midnight Commander (mc)
-  - Hyprland
-  - OpenCode
-- **Tool Setup:** Scripts to install and configure development tools like VS Code, Ghostty, Zen Browser, OpenCode, and more.
-- **Cleanup:** Includes a script to remove unwanted "bloat" software.
-- **Maintenance:** `upstow.sh` for easy package creation from existing home directory configs.
-- **Secret Management:** Integrated Bitwarden CLI and `gomplate` for secure configuration templating.
+- **Dotfile Management:** Uses [GNU Stow](https://www.gnu.org/software/stow/) to manage configurations for Bash, Git, Hyprland, etc.
+- **Secret Management:** Integrated Bitwarden CLI and `gomplate` for secure, step-scoped configuration templating.
+- **Tool Setup:** Scripts for VS Code, Ghostty, Zen Browser, OpenCode, and more.
+- **Cleanup:** `uninstall-bloat.sh` for removing unwanted software.
 
-## BITWARDEN SECRETS SETUP
-To use templated configurations (like OpenCode), you must have a Secure Note in Bitwarden named `dotfiles-secrets` containing a flat JSON object with your keys:
+## Bitwarden Secrets Setup
+
+The system uses specialized Bitwarden Secure Notes to inject secrets into configuration templates.
+
+### 1. Global Secrets (`dotfiles-secrets`)
+Create a Secure Note named `dotfiles-secrets` for general configurations.
+
+### 2. Package-Specific Secrets (e.g., `opencode-secrets`)
+For specific tools like OpenCode, create a separate Secure Note (e.g., `opencode-secrets`):
 ```json
 {
   "GITEA_HOST": "https://git.example.com",
@@ -28,7 +26,8 @@ To use templated configurations (like OpenCode), you must have a Secure Note in 
   "EXA_API_KEY": "your-key"
 }
 ```
-During installation, you will be prompted to login/unlock Bitwarden.
+
+During installation, you will be prompted to login/unlock Bitwarden once, and the session will be reused.
 
 ## Usage
 
@@ -40,14 +39,9 @@ To update the system and install all supplementary tools and configurations:
 ./install-all.sh
 ```
 
-This script will:
-1. Update the system (`pacman -Syyu`).
-2. Execute all scripts located in the `steps/` directory.
-3. Apply dotfiles using `stow`.
-
 ### Uninstalling Bloat
 
-To remove specific pre-installed applications (like 1Password, Alacritty, Obsidian) and web apps:
+To remove specific pre-installed applications:
 
 ```bash
 ./uninstall-bloat.sh
@@ -55,8 +49,8 @@ To remove specific pre-installed applications (like 1Password, Alacritty, Obsidi
 
 ## Directory Structure
 
-- **`steps/`**: Contains individual installation scripts (e.g., `install-ghostty.sh`, `install-vscode.sh`).
-- **`bash/`, `fastfetch/`, `git/`, `hyprland/`, `mc/`, `starship/`, `tmux/`**: Configuration directories managed by Stow.
-- **`install-all.sh`**: Main entry point for installation.
-- **`uninstall-bloat.sh`**: Script for removing specific packages.
-- **`upstow.sh`**: Helper to copy files from home to the repo's `dotfiles/` package.
+- **`dotfiles/`**: Stow packages for symlinking to `$HOME`.
+- **`steps/`**: Modular installation scripts sourced by `install-all.sh`.
+- **`templates/`**: Configuration templates organized by package (e.g., `templates/opencode/`).
+- **`install-all.sh`**: Main entry point.
+- **`upstow.sh` / `unstow.sh`**: Helpers for managing dotfile packages.
