@@ -58,7 +58,8 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # Seeing as other scripts will use it might as well export it
 export LINUXTOOLBOXDIR="$HOME/linuxtoolbox"
 
-export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/podman/podman.sock
+export CONTAINER_HOST="$DOCKER_HOST"
 export OLLAMA_API_BASE=http://127.0.0.1:11434
 
 # Allow ctrl-S for history navigation (with ctrl-R)
@@ -249,8 +250,7 @@ alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
 
 alias kssh="kitty +kitten ssh"
 
-# alias to cleanup unused docker containers, images, networks, and volumes
-
+# alias to cleanup unused podman containers, images, networks, and volumes
 alias docker-clean=' \
   docker container prune -f ; \
   docker image prune -f ; \

@@ -50,20 +50,30 @@ process_bw_templates() {
         return 0
     fi
 
-    # Bitwarden Auth
-    if ! bw login --check >/dev/null 2>&1; then
-        echo "--------------------------------------------------------"
-        echo "Secrets management requires access to your Bitwarden vault."
-        echo "This is used to inject configuration secrets (API keys, etc.)"
-        echo "into your dotfiles templates using gomplate."
-        echo "--------------------------------------------------------"
-        export BW_SESSION=$(bw login --raw)
-    elif [ -z "$BW_SESSION" ]; then
-        echo "--------------------------------------------------------"
-        echo "Unlocking Bitwarden vault for secrets injection..."
-        echo "--------------------------------------------------------"
-        export BW_SESSION=$(bw unlock --raw)
-    fi
+    status_json=$(bw status 2>/dev/null)
+    status=$(echo "$status_json" | jq -r '.status // "unauthenticated"')
+    email=$(echo "$status_json" | jq -r '.userEmail // ""')
+
+    case "$status" in
+        unauthenticated)
+            if [ -z "$email" ]; then
+                read -r -p "Enter Bitwarden email: " email
+            fi
+            export BW_SESSION=$(bw login --raw "$email") || return 1
+            ;;
+        locked)
+            export BW_SESSION=$(bw unlock --raw) || return 1
+            ;;
+        unlocked)
+            if [ -z "$BW_SESSION" ]; then
+                export BW_SESSION=$(bw unlock --raw) || return 1
+            fi
+            ;;
+        *)
+            echo "Bitwarden status unknown: $status"
+            return 1
+            ;;
+    esac
 
     # Fetch secrets
     if ! bw get item "$BW_ITEM" >/dev/null 2>&1; then
