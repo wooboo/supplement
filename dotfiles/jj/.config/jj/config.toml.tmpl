@@ -1,6 +1,6 @@
 [user]
-name = "YeonGyu Kim"
-email = "yeongyu.kim@gmail.com"
+name = "{{ (ds "secrets").GIT_NAME }}"
+email = "{{ (ds "secrets").GIT_EMAIL }}"
 
 [ui]
 default-command = "log"

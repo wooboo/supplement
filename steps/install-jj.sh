@@ -6,6 +6,7 @@ yay -S --noconfirm --needed jujutsu
 
 # Setup jujutsu configuration via stow
 if [ -d "$REPO_ROOT/dotfiles/jj" ]; then
+    process_bw_templates "dotfiles-secrets" "$REPO_ROOT/dotfiles/jj"
     safe_stow "jj" "$REPO_ROOT/dotfiles"
 fi
 
