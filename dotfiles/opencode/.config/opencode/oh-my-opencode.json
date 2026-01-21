@@ -3,25 +3,34 @@
   "google_auth": false,
   "agents": {
     "Sisyphus": {
-      "model": "opencode/glm-4.7-free"
+      "model": "google/antigravity-claude-opus-4-5-thinking"
     },
     "librarian": {
-      "model": "opencode/glm-4.7-free"
+      "model": "google/antigravity-gemini-3-flash"
     },
     "explore": {
-      "model": "opencode/glm-4.7-free"
+      "model": "google/antigravity-gemini-3-flash"
     },
     "oracle": {
-      "model": "opencode/glm-4.7-free"
+      "model": "google/antigravity-gemini-3-pro-high"
     },
     "frontend-ui-ux-engineer": {
-      "model": "opencode/glm-4.7-free"
+      "model": "google/antigravity-gemini-3-pro-high"
     },
     "document-writer": {
-      "model": "opencode/glm-4.7-free"
+      "model": "google/antigravity-gemini-3-flash"
     },
     "multimodal-looker": {
-      "model": "opencode/glm-4.7-free"
+      "model": "google/antigravity-gemini-3-flash"
+    },
+    "Prometheus (Planner)": {
+      "model": "google/antigravity-claude-opus-4-5-thinking"
+    },
+    "Metis (Plan Consultant)": {
+      "model": "google/antigravity-claude-sonnet-4-5"
+    },
+    "Momus (Plan Reviewer)": {
+      "model": "google/antigravity-claude-sonnet-4-5"
     }
   }
 }
